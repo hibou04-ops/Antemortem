@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `docs/methodology.md § Antemortem vs pre-mortem` — explicit differentiation from Gary Klein's pre-mortem (*HBR*, 2007). Tactical (code-level, solo, LLM-assisted) vs strategic (project-level, team).
+- `README § How it differs from adjacent practices` — comparison table positioning antemortem against code review, pre-mortem, and postmortem on timing / scope / discharge / output axes.
+- `README § FAQ` — six common questions, including the pre-mortem confusion, model agnosticism, the two constraints that distinguish antemortem from ad-hoc "LLM, review my plan", recon budget, citation-based classification checks, and private-code usage.
+- `README § Citing this work` — citation formats for the methodology and the first case study.
+- `README § Contents` — updated to reflect the new sections.
+
 ## [0.1] - 2026-04-20
 
 Initial public release. Docs, template, and first case study.

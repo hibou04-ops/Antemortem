@@ -15,9 +15,12 @@ It is not a replacement for testing. It is a replacement for the first half-day 
 - [Why now](#why-now)
 - [The seven steps](#the-seven-steps)
 - [Does it work?](#does-it-work)
+- [How it differs from adjacent practices](#how-it-differs-from-adjacent-practices)
 - [How to use this repo](#how-to-use-this-repo)
 - [Status](#status)
+- [FAQ](#faq)
 - [Contributing](#contributing)
+- [Citing this work](#citing-this-work)
 - [License](#license)
 - [Colophon](#colophon)
 
@@ -56,6 +59,17 @@ Short version of what that antemortem caught:
 
 Post-recon P(full spec ships on time) went from 55–65% to 70–78%. The implementation took one engineer-day; 20 new tests passed on first run.
 
+## How it differs from adjacent practices
+
+| Practice | Timing | Scope | Typical discharge | Output |
+|---|---|---|---|---|
+| Code review | After the change is written | Diff-local | Minutes, per PR | Approval / change requests |
+| **Antemortem** | **Before** the change is written | Change-local | 15–30 min, solo + LLM | Risk-classified doc with file + line citations |
+| Pre-mortem (Klein, 2007) | Before the project commits | Project-level | 30–60 min, team exercise | Ranked failure scenarios |
+| Postmortem | After something broke | Incident-local | Hours, team | Root cause + action items |
+
+Code review catches what is on the PR. An antemortem catches what is *not yet* on the PR — because the author has not written it yet. Pre-mortem is strategic (*should we do this?*); antemortem is tactical (*given that we will, what does the code already tell us about the risks of doing it this way?*). See [`docs/methodology.md § Antemortem vs pre-mortem`](docs/methodology.md#antemortem-vs-pre-mortem) for the longer distinction.
+
 ## How to use this repo
 
 This v0.1 ships as **docs and templates only**. Clone, read, copy the template into your own project, run the protocol with the LLM of your choice.
@@ -68,11 +82,47 @@ A CLI helper (`antemortem init <project>`) is on the roadmap but not required �
 - **v0.2 (planned)** — `antemortem` PyPI package with CLI scaffolding, extra case studies.
 - **v0.3 (speculative)** — structured schemas for antemortem docs so teams can diff them across PRs.
 
+## FAQ
+
+**Isn't this just pre-mortem with a new name?**
+No. Gary Klein's pre-mortem (*HBR*, 2007) is a team-level strategic exercise. Antemortem is change-level, solo, source-code-grounded, and discharged in 15–30 minutes. See [`docs/methodology.md § Antemortem vs pre-mortem`](docs/methodology.md#antemortem-vs-pre-mortem).
+
+**Do I need Claude Opus 4.7? Will other LLMs work?**
+Any reasoning model that can follow multi-file call chains works. The first case study used Opus 4.7 because that was the author's environment; the discipline is the value, the model is the engine.
+
+**How is this different from just asking an LLM "review my plan"?**
+Two constraints. Step 2 forces you to enumerate your own risks before the LLM sees them (prevents anchoring on its framing). Step 4 forces file + line citations (prevents accepting its vibes). Without these, you have traded one form of hand-waving for another.
+
+**Is 15 minutes realistic for a 1–2 day change?**
+For a change touching 4–7 files that the model can parallel-read, yes. For larger changes, split into multiple antemortems. If the recon exceeds an hour, the change itself is probably too big — split it first.
+
+**What if the LLM's classification is wrong?**
+The citations are the check. *"The code shows X"* is not evidence; *"line 82 of `walk_forward.py` calls `evaluate()` once per params, no loop"* is. Verify each citation against the actual file. If the citation is wrong, the classification is wrong.
+
+**Can I run an antemortem on closed-source or private code?**
+Yes. The LLM reads what you give it; it does not need a public repo. The only constraint is that citations in a published case study should quote enough inline context to be verifiable by readers without repo access.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: case studies go under `examples/` via PR, methodology revisions go against `docs/methodology.md`, primary-source citations are the bar.
 
 Release notes in [CHANGELOG.md](CHANGELOG.md). Community expectations in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Citing this work
+
+If you reference this methodology in a paper, blog post, or internal document:
+
+```
+Antemortem v0.1 — AI-assisted pre-implementation reconnaissance for software changes.
+https://github.com/hibou04-ops/Antemortem, 2026.
+```
+
+The first case study may be cited separately:
+
+```
+Antemortem case study: omega_lock.audit (2026-04-18).
+https://github.com/hibou04-ops/Antemortem/blob/main/examples/omega-lock-audit.md
+```
 
 ## License
 

@@ -23,6 +23,16 @@ What stayed expensive: **writing correct code**. So if AI can cheaply front-load
 
 This is the same logic driving surrogate models in expensive-evaluation optimization: put a cheap analysis between the hypothesis and the costly experiment.
 
+## Antemortem vs pre-mortem
+
+Gary Klein introduced the **pre-mortem** in *HBR* (2007) as a team exercise: imagine the project has failed, brainstorm why, use the list to prioritize mitigation. It is *strategic* — about the project, about decisions, about people and plans.
+
+The **antemortem** as defined in this repository is *tactical* — about a single code change, scoped to a specific set of files, discharged in 15–30 minutes with an LLM as the reading engine. It borrows the "before the fact" temporal framing but operates on source code rather than project dynamics.
+
+Both practices are valid and complementary. A pre-mortem asks *should we do this?* An antemortem assumes the answer is yes and asks *what does the code already tell us about the risks of doing it this way?*
+
+In a well-run project you might do both at different scales: a pre-mortem at project kickoff, an antemortem before each non-trivial code change.
+
 ## The protocol
 
 Seven steps. Each one short. The output is a doc.
