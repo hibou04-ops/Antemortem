@@ -1,0 +1,31 @@
+# ── OS cruft ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE / editor state ───────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Python (for v0.2 when CLI is added) ─────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+.tox/
+build/
+dist/
+
+# ── Documentation build artifacts ────────────────────────────────────────
+site/
+_build/
+
+# ── Local-only drafts that shouldn't ship ────────────────────────────────
+drafts/
+scratch/
+*.draft.md

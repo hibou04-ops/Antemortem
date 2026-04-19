@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Submit a case study
+    url: https://github.com/hibou04-ops/Antemortem/blob/main/CONTRIBUTING.md#case-studies
+    about: Case studies are contributed via pull request, not issue — see CONTRIBUTING.md for the bar.
+  - name: Ask about the methodology
+    url: https://github.com/hibou04-ops/Antemortem/discussions
+    about: Questions about when to use / not use antemortem, or how to interpret a step, belong in Discussions.
