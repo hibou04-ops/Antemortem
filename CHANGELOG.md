@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - `docs/methodology.md § Antemortem vs pre-mortem` — explicit differentiation from Gary Klein's pre-mortem (*HBR*, 2007). Tactical (code-level, solo, LLM-assisted) vs strategic (project-level, team).
 - `README § How it differs from adjacent practices` — comparison table positioning antemortem against code review, pre-mortem, and postmortem on timing / scope / discharge / output axes.
+- `README § Limits` — surfaces what antemortem catches vs what it does not (runtime issues, platform quirks, product wrong turns, empirical claims, blind spots) so drive-by readers see the bounds before adopting the method.
 - `README § FAQ` — six common questions, including the pre-mortem confusion, model agnosticism, the two constraints that distinguish antemortem from ad-hoc "LLM, review my plan", recon budget, citation-based classification checks, and private-code usage.
 - `README § Citing this work` — citation formats for the methodology and the first case study.
 - `README § Contents` — updated to reflect the new sections.

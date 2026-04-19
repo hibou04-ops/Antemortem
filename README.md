@@ -16,6 +16,7 @@ It is not a replacement for testing. It is a replacement for the first half-day 
 - [The seven steps](#the-seven-steps)
 - [Does it work?](#does-it-work)
 - [How it differs from adjacent practices](#how-it-differs-from-adjacent-practices)
+- [Limits](#limits)
 - [How to use this repo](#how-to-use-this-repo)
 - [Status](#status)
 - [FAQ](#faq)
@@ -69,6 +70,25 @@ Post-recon P(full spec ships on time) went from 55–65% to 70–78%. The implem
 | Postmortem | After something broke | Incident-local | Hours, team | Root cause + action items |
 
 Code review catches what is on the PR. An antemortem catches what is *not yet* on the PR — because the author has not written it yet. Pre-mortem is strategic (*should we do this?*); antemortem is tactical (*given that we will, what does the code already tell us about the risks of doing it this way?*). See [`docs/methodology.md § Antemortem vs pre-mortem`](docs/methodology.md#antemortem-vs-pre-mortem) for the longer distinction.
+
+## Limits
+
+An antemortem is a **reading discipline**. What it catches:
+
+- Ghost traps whose disproof lives in the code itself.
+- Missing or wrong spec fields the recon surfaces.
+- Hidden but visible-from-source mitigations you had forgotten about.
+- Call patterns that differ from your mental model.
+
+What it does **not** catch:
+
+- Runtime-only issues (race conditions, GC timing, network behaviour).
+- Platform-specific issues the model has no file-level evidence for.
+- Product-level wrong turns — a spec can be internally consistent and still build the wrong thing.
+- Claims requiring empirical measurement (performance, numerical stability, accuracy on real data).
+- Your own blind spots, if you only ask the model about the risks you already worry about.
+
+The world an antemortem knows is the world in the files. Anything outside that, it will speak about with misplaced confidence if you let it. Full discussion in [`docs/methodology.md § Limits`](docs/methodology.md#limits).
 
 ## How to use this repo
 
