@@ -12,6 +12,8 @@ A postmortem explains the wreckage. An antemortem prevents the half-day of imple
 
 This repo holds the methodology — the seven-step protocol, two templates, and the first case study. The companion tool [`antemortem-cli`](https://github.com/hibou04-ops/antemortem-cli) automates the scaffolding, the classification pass, and the schema lint (Pydantic-enforced, citations re-verified on disk). Together they form a three-layer stack: methodology here, tooling there, first shipped artifact at [`omega-lock`](https://github.com/hibou04-ops/omega-lock).
 
+한국어 README: [README_KR.md](README_KR.md)
+
 ## Contents
 
 - [Why this discipline exists](#why-this-discipline-exists)
