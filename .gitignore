@@ -29,3 +29,6 @@ _build/
 drafts/
 scratch/
 *.draft.md
+
+# ── Local prototype workspace (v0.2 CLI exploration, not for distribution) ──
+.gstack/

@@ -56,6 +56,78 @@ Seven steps. Each one short. The output is a doc.
 
 Do not skip step 4. The temptation is to accept the LLM's classification without citations. The citation is the discipline. Without it you've just traded one form of hand-waving for another.
 
+## Enhanced protocol (optional)
+
+The seven-step protocol is sufficient for most changes. For high-stakes changes (prod deploy, data migration, security boundary) or when false-positive control matters, four additions sharpen the signal. The enhanced template at `templates/antemortem-template-enhanced.md` applies them in one integrated form.
+
+These are not a separate protocol. They are richer forms of steps 2, 4, and 6.
+
+### 1. Calibration dimensions (richer step 2)
+
+Every hypothesized trap gets four axes before the recon, not just P:
+
+- **P(issue)** — gut probability this is a real risk.
+- **Evidence strength** — low/mid/high. `low` = "just a feeling", `mid` = "I've seen this pattern before", `high` = "the code structure already hints at it".
+- **Blast radius** — local / module / service / system. Where damage stops if the trap fires.
+- **Reversibility** — easy / hard / irrecoverable. What it costs to undo.
+
+Why four axes: P alone underweights consequence. A 10% trap with irrecoverable blast deserves more care than a 40% trap that's local-and-easy. Scoring each axis forces weighing risks by consequence, not just likelihood.
+
+### 2. Fine-grained classification (richer step 4)
+
+REAL / GHOST / NEW are useful starting labels but lossy. Subdivide:
+
+- **REAL-structural** — code confirms (static evidence).
+- **REAL-runtime-uncertain** — code suggests; only runtime can confirm.
+- **GHOST-mitigated** — exists but already handled upstream.
+- **GHOST-unreachable** — code path doesn't actually trigger.
+- **GHOST-assumption-error** — hypothesis was based on wrong mental model.
+- **GHOST-test-covered** — a test explicitly pins the invariant.
+- **NEW-spec-gap** — missing requirement not covered by the spec.
+- **NEW-coupling** — hidden cross-module dependency.
+- **NEW-operational** — ops / observability / rollout.
+- **NEW-policy** — compliance / permission / legal.
+
+Why this matters: different subtypes have different half-lives. A `GHOST-mitigated` stays mitigated only while the upstream code doesn't drift. A `GHOST-assumption-error` means *you* were wrong — the same mental-model gap may lurk elsewhere.
+
+### 3. Explicit skeptic pass (new step 4b)
+
+After classifying each trap, explicitly try to downgrade each REAL and NEW finding. Search for counterevidence. If you can't find any after looking, the classification stands with higher confidence.
+
+This catches LLM confabulation. A model that produced a plausible-sounding REAL will, when pressed with "find evidence this is NOT real", sometimes downgrade it on its own. The skeptic pass forces that reconsideration to be explicit rather than implicit.
+
+Good counter-hypothesis patterns:
+
+- *"A mitigation might already exist in the call site / caller / config."*
+- *"The code path might not actually trigger under the conditions of this change."*
+- *"A test might already pin the invariant I'm worried about."*
+- *"The hypothesis might be based on a wrong mental model of the module."*
+
+The mantra still applies: *"the code shows X"* is not evidence; *"line 82 of `walk_forward.py` calls `evaluate()` once per params, no loop"* is.
+
+### 4. Decision-first output (richer step 6)
+
+Instead of outputting a risk list, output decisions in five blocks:
+
+- **A. Decision blockers** — what must be resolved before coding starts (max 3).
+- **B. Spec mutations required** — concrete edits to the spec.
+- **C. Safe implementation path** — ordered low-risk steps.
+- **D. Runtime validation needed** — what static recon cannot answer, to verify during/after implementation.
+- **E. Deprioritized risks** — consciously deferred, with reason.
+
+Why decisions, not risks: a risk list creates anxiety without obligation. A decision document pulls what you learned back into the change plan. When you reread it during implementation, each block maps to something you can act on or verify.
+
+### When to use the enhanced form
+
+Use the enhanced template when **any** of:
+
+- The change touches production data, external users, or a security boundary.
+- The change is hard to reverse (migrations, data deletion, published APIs).
+- You are building a personal track record of predictions vs reality (section 8 of the enhanced template has a feedback table).
+- You want the skeptic pass to kill false positives explicitly.
+
+The basic template is enough for small, reversible, low-blast changes — prototypes, internal tooling, refactors that tests already cover. Don't use the enhanced form for everything; its value is in the cases where the cost of a missed risk justifies the extra minutes.
+
 ## Rubric: did the antemortem work?
 
 A good antemortem gets three things right:

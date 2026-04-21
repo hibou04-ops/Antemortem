@@ -1,7 +1,7 @@
 # Antemortem
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)
-![Version](https://img.shields.io/badge/version-0.1-blue)
+![Version](https://img.shields.io/badge/version-0.1.1-blue)
 ![Status](https://img.shields.io/badge/status-docs--only-lightgrey)
 
 *AI-assisted pre-implementation reconnaissance for software changes.*
@@ -47,6 +47,8 @@ What stayed expensive: **writing correct code**. So if AI can cheaply front-load
 Do not skip step 4. Citations are the discipline. Without them you've just traded one form of hand-waving for another.
 
 The full methodology, including rubric and failure modes, is in [docs/methodology.md](docs/methodology.md). A copy-ready template lives in [templates/antemortem-template.md](templates/antemortem-template.md).
+
+For high-stakes changes (prod deploys, data migrations, security boundaries), use the [enhanced template](templates/antemortem-template-enhanced.md) — it adds calibration dimensions (evidence strength, blast radius, reversibility), fine-grained classification subtypes, an explicit skeptic pass, and a decision-first output structure. See [`docs/methodology.md § Enhanced protocol`](docs/methodology.md#enhanced-protocol-optional) for the rationale.
 
 ## Does it work?
 

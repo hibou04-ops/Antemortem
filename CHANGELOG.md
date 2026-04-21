@@ -4,16 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.1] - 2026-04-21
 
 ### Added
 
 - `docs/methodology.md § Antemortem vs pre-mortem` — explicit differentiation from Gary Klein's pre-mortem (*HBR*, 2007). Tactical (code-level, solo, LLM-assisted) vs strategic (project-level, team).
+- `docs/methodology.md § Enhanced protocol (optional)` — four additions for high-stakes changes: calibration dimensions (P, evidence strength, blast radius, reversibility), fine-grained classification subtypes (REAL-structural, REAL-runtime-uncertain, GHOST-mitigated, GHOST-unreachable, GHOST-assumption-error, GHOST-test-covered, NEW-spec-gap, NEW-coupling, NEW-operational, NEW-policy), explicit skeptic pass (step 4b), and decision-first output structure (five blocks: blockers / spec mutations / safe path / runtime validation / deprioritized).
+- `templates/antemortem-template-enhanced.md` — enhanced template, a superset of the basic one. Adds calibration columns to the trap table, fine-grained classification, skeptic pass section (§4b), five-block decision document (§6), and prediction-feedback table (§8) for building a personal track record of recon-vs-reality outcomes. Philosophy header + counter-hypothesis patterns included.
 - `README § How it differs from adjacent practices` — comparison table positioning antemortem against code review, pre-mortem, and postmortem on timing / scope / discharge / output axes.
 - `README § Limits` — surfaces what antemortem catches vs what it does not (runtime issues, platform quirks, product wrong turns, empirical claims, blind spots) so drive-by readers see the bounds before adopting the method.
 - `README § FAQ` — six common questions, including the pre-mortem confusion, model agnosticism, the two constraints that distinguish antemortem from ad-hoc "LLM, review my plan", recon budget, citation-based classification checks, and private-code usage.
 - `README § Citing this work` — citation formats for the methodology and the first case study.
 - `README § Contents` — updated to reflect the new sections.
+- `README` — enhanced-template pointer added to the protocol blurb so readers know when to reach for the richer form.
 
 ## [0.1] - 2026-04-20
 
