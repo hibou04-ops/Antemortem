@@ -3,7 +3,7 @@
 **Date:** YYYY-MM-DD
 **Author:** <you>
 **Repo / branch:** <where this change will live>
-**Model used for recon:** <e.g., Claude Opus 4.7>
+**Model used for recon:** <e.g., Claude>
 
 ---
 

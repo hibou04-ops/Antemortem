@@ -2,7 +2,7 @@
 
 **Date:** 2026-04-18
 **Repo:** [`omega-lock`](https://github.com/hibou04-ops/omega-lock) (Python, calibration framework on PyPI)
-**Model used for recon:** Claude Opus 4.7 in Claude Code
+**Model used for recon:** Claude in Claude Code
 **Recon time:** ≈15 minutes
 
 ---

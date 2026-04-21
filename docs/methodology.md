@@ -173,7 +173,7 @@ This also fits the broader pattern in AI-assisted design-space optimization: whe
 
 ## Practical notes
 
-**Choosing the LLM.** Any capable reasoning model works. The first case study in this repo used Claude Opus 4.7 inside Claude Code. Capability matters more than brand — the model has to follow multi-file call chains and hold the change-plan in context while verifying.
+**Choosing the LLM.** Any capable reasoning model works. The first case study in this repo used Claude inside Claude Code; the companion `antemortem-cli` tool pins a specific Claude version for reproducibility. Capability matters more than brand — the model has to follow multi-file call chains and hold the change-plan in context while verifying.
 
 **Scope the recon.** Ask the model to read the *files the change will touch*, not the whole repo. Too wide a read dilutes attention and produces vague answers. Err on the side of narrow: add files only if the first pass produces findings that clearly depend on code you didn't include.
 

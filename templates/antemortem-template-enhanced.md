@@ -3,7 +3,7 @@
 **Date:** YYYY-MM-DD
 **Author:** <you>
 **Repo / branch:** <where this change will live>
-**Model used for recon:** <e.g., Claude Opus 4.7>
+**Model used for recon:** <e.g., Claude>
 **Template:** enhanced (incorporates calibration dimensions + skeptic loop + decision-first output)
 
 > This is the **enhanced** template, a superset of `antemortem-template.md`. Use when the change is high-stakes, touches prod data, is hard to reverse, or when you want stronger false-positive control. Solo-use optimized.
