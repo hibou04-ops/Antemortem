@@ -1,6 +1,8 @@
 # Antemortem (한국어)
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+> **처음이신가요?** 먼저 보세요: [EASY_README_KR.md](EASY_README_KR.md) (한국어) · [EASY_README.md](EASY_README.md) (English). 아래 본 문서가 어렵게 느껴지는 분들을 위한 압축된 쉬운 소개.
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Version](https://img.shields.io/badge/version-0.1.1-blue)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen)](#상태)
 [![Tooling](https://img.shields.io/badge/tooling-antemortem--cli-blueviolet)](https://github.com/hibou04-ops/antemortem-cli)
@@ -196,7 +198,9 @@ https://github.com/hibou04-ops/antemortem-cli, 2026.
 
 ## 라이선스
 
-MIT. [LICENSE](LICENSE) 참조.
+Apache License 2.0. [LICENSE](LICENSE) 및 [NOTICE](NOTICE) 참조.
+
+Copyright (c) 2026 hibou.
 
 ## Colophon
 

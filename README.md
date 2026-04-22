@@ -1,6 +1,8 @@
 # Antemortem
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+> **New to this?** Start here: [EASY_README.md](EASY_README.md) (English) · [EASY_README_KR.md](EASY_README_KR.md) (한국어). Compressed plain-language introductions for readers who find the full doc below intimidating.
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Version](https://img.shields.io/badge/version-0.1.1-blue)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen)](#status)
 [![Tooling](https://img.shields.io/badge/tooling-antemortem--cli-blueviolet)](https://github.com/hibou04-ops/antemortem-cli)
@@ -196,7 +198,9 @@ https://github.com/hibou04-ops/antemortem-cli, 2026.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+Copyright (c) 2026 hibou.
 
 ## Colophon
 
