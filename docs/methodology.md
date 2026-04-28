@@ -1,8 +1,22 @@
-# Methodology
+# Antemortem: AI-assisted Pre-implementation Reconnaissance for Software Changes
 
-*AI-assisted pre-implementation reconnaissance for software changes.*
+| | |
+|---|---|
+| **Author** | Kyunghoon Gwak (곽경훈) — [@hibou04-ops](https://github.com/hibou04-ops), `hibouaile04@gmail.com` |
+| **First publication** | 2026-04-20 (commit `7e378ad`) |
+| **Current version** | v0.1.1 (Apache 2.0, relicensed 2026-04-22, commit `8bf43b4`) |
+| **Repository** | https://github.com/hibou04-ops/Antemortem |
+| **Companion tool** | https://github.com/hibou04-ops/antemortem-cli |
+| **First case study** | `examples/omega-lock-audit.md` |
+| **Korean version** | [methodology_KR.md](methodology_KR.md) |
+| **License** | Apache License 2.0 |
+| **How to cite** | See [README §Citing this work](../README.md#citing-this-work) |
 
-**Status:** v0.1 methodology. First case study: `omega-lock` audit-module pivot (see `examples/omega-lock-audit.md`).
+---
+
+## Abstract
+
+The **antemortem** is a tactical pre-implementation reconnaissance discipline for software changes. It puts a planned change under stress *on paper* before any code is written: an LLM is given the spec and the implicated files, hypothesized risks are classified as `REAL` / `GHOST` / `NEW` / `UNRESOLVED` with primary-source `file:line` citations, and the spec is revised *before* implementation begins. The discipline differs from Gary Klein's pre-mortem (HBR 2007) in scope (a single code change, not a project) and granularity (15–30 minutes against actual source code, not strategic team brainstorming). This document specifies the seven-step protocol, the classification taxonomy, and the case-study evidence supporting it.
 
 ---
 
