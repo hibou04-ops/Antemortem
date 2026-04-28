@@ -202,6 +202,8 @@ Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 Copyright (c) 2026 hibou.
 
+**License history.** Tags `v0.1` and `v0.1.1` were released under the MIT License. The repository was relicensed to Apache 2.0 on 2026-04-22 (commit `8bf43b4`); all subsequent commits and tags ship under Apache 2.0. Anyone who cloned or vendored the repository at `v0.1` / `v0.1.1` holds an MIT license to that snapshot — license changes do not apply retroactively.
+
 ## Colophon
 
 Antemortem as a named practice was crystallized during `omega_lock.audit` development on 2026-04-18. The first case study is the recon that caught a ghost trap on the [`omega-lock`](https://github.com/hibou04-ops/omega-lock) codebase before the `omega_lock.audit` submodule was built. The recon itself was performed with Claude inside Claude Code; this repo is its synthesis.
