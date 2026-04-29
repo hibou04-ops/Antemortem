@@ -1,22 +1,80 @@
 # Antemortem
 
-> **New to this?** Start here: [EASY_README.md](EASY_README.md) (English) · [EASY_README_KR.md](EASY_README_KR.md) (한국어). Compressed plain-language introductions for readers who find the full doc below intimidating.
+> **AI-assisted pre-implementation reconnaissance for software changes.**
+> A postmortem explains the wreckage. An antemortem prevents the half-day of implementation that gets burned discovering one of your "risks" was imaginary and one you never imagined was load-bearing.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Version](https://img.shields.io/badge/version-0.1.1-blue)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen)](#status)
 [![Tooling](https://img.shields.io/badge/tooling-antemortem--cli-blueviolet)](https://github.com/hibou04-ops/antemortem-cli)
+[![First artifact](https://img.shields.io/badge/artifact-omega--lock-blueviolet)](https://github.com/hibou04-ops/omega-lock)
 
 > **Part of the omegaprompt toolkit** — [omegaprompt](https://github.com/hibou04-ops/omegaprompt) (calibration engine) · [omega-lock](https://github.com/hibou04-ops/omega-lock) (audit framework) · [antemortem-cli](https://github.com/hibou04-ops/antemortem-cli) (pre-implementation recon CLI) · [mini-omega-lock](https://github.com/hibou04-ops/mini-omega-lock) (empirical preflight) · [mini-antemortem-cli](https://github.com/hibou04-ops/mini-antemortem-cli) (analytical preflight) · [Antemortem](https://github.com/hibou04-ops/Antemortem) (methodology, this repo). Cross-toolkit cookbook (when-to-call-which-tool, 9 agent scenarios): [AGENT_TRIGGERS.md](https://github.com/hibou04-ops/omegaprompt/blob/main/AGENT_TRIGGERS.md).
 
-> **AI-assisted pre-implementation reconnaissance for software changes.**
-> A postmortem is what you write after something breaks. An antemortem is what you do before you build — and the discipline that keeps it honest.
+This repo holds the **methodology** — a seven-step protocol, two templates, and the first case study. There is **no code to install here**. Use the linked artifacts:
 
-A postmortem explains the wreckage. An antemortem prevents the half-day of implementation that usually gets burned discovering that one of your "risks" was imaginary and one you never imagined was load-bearing. You put the planned change under stress *on paper*, hand the spec and the implicated files to a capable LLM, classify every hypothesized risk as `REAL` / `GHOST` / `NEW` / `UNRESOLVED` with primary-source `file:line` citations, and revise the spec *before* you write a single line.
+| Layer | Repo | What it is |
+|---|---|---|
+| **Methodology** | this repo | The seven-step protocol, templates, case study |
+| **Tooling** | [`antemortem-cli`](https://github.com/hibou04-ops/antemortem-cli) | `pip install antemortem` — automates scaffolding, classification, lint |
+| **First shipped artifact** | [`omega-lock`](https://github.com/hibou04-ops/omega-lock) | Calibration audit framework built using this methodology |
 
-This repo holds the methodology — the seven-step protocol, two templates, and the first case study. The companion tool [`antemortem-cli`](https://github.com/hibou04-ops/antemortem-cli) automates the scaffolding, the classification pass, and the schema lint (Pydantic-enforced, citations re-verified on disk). Together they form a three-layer stack: methodology here, tooling there, first shipped artifact at [`omega-lock`](https://github.com/hibou04-ops/omega-lock).
+🇰🇷 한국어 README: [README_KR.md](README_KR.md)
 
-한국어 README: [README_KR.md](README_KR.md)
+---
+
+## TL;DR — what & why
+
+LLM capability has made two things cheap that used to be expensive: **reading a codebase** and **enumerating failure modes**. What stayed expensive: **writing correct code**. Antemortem turns that capability gap into a repeatable protocol that runs *before* you write the diff:
+
+- **You enumerate your own traps before any code is shown to the model.** Anchoring defense.
+- **Every classification carries a `file:line` citation.** Vibes-based agreement defense.
+- **Schema-checkable artifact.** Lint can re-verify citations on disk after the run.
+- **Four-level decision gate**: `PROCEED` / `PROCEED_WITH_GUARDS` / `REVISE_SPEC` / `BLOCK`. CI-friendly.
+- **Runs before the expensive phase**, when changing direction is cheap.
+
+Two guardrails keep the discipline honest:
+
+1. You enumerate your own traps **before the model sees any code** — prevents anchoring on the model's framing.
+2. Every classification carries a `file:line` citation — *"line 82 of `walk_forward.py` calls `evaluate()` once per params, with no surrounding loop"* is evidence; *"the code shows X"* is not.
+
+---
+
+## Try it now
+
+The methodology is written here. The tool that automates it is one `pip install` away:
+
+```bash
+pip install antemortem
+git clone https://github.com/hibou04-ops/antemortem-cli.git
+cd antemortem-cli && PYTHONIOENCODING=utf-8 python examples/demo_replay.py
+```
+
+This replays a real recon (4 traps → REAL/GHOST/NEW/UNRESOLVED → decision gate) deterministically — no API keys needed for the demo.
+
+For the methodology itself (the protocol, templates, case study), keep reading below.
+
+---
+
+## How it differs from adjacent practices
+
+| Practice | What it does | What antemortem adds |
+|---|---|---|
+| **Pre-mortem (Klein, 1999)** | Imagine the project failed; brainstorm reasons | Trap enumeration *before* model sees code; citations on every classification |
+| **Code review** | Examine code that already exists | Examines a *spec* before the code is written |
+| **LLM "review my plan" prompts** | Ask AI to critique your proposal | You frame traps first (anchoring defense); evidence must cite disk |
+| **Risk register / RFC review** | Document risks for a formal proposal | Per-trap classification + lint-verified citations + decision gate enum |
+
+> **Position**: Antemortem is **recon-first**, not review-first. It runs *before* code exists, with mechanical guardrails (anchoring defense + citation lint) that keep the LLM-assisted analysis honest.
+
+---
+
+📖 **Want depth?** Full seven-step protocol, validation, FAQ, and case study below.
+👋 **Want simpler?** [EASY_README.md](EASY_README.md) (English) · [EASY_README_KR.md](EASY_README_KR.md)
+
+> **The 3-layer stack**: methodology (this repo) → tooling ([`antemortem-cli`](https://github.com/hibou04-ops/antemortem-cli)) → first shipped artifact ([`omega-lock`](https://github.com/hibou04-ops/omega-lock)).
+
+---
 
 ## Contents
 
