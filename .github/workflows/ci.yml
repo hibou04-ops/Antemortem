@@ -52,6 +52,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install PyYAML
+        run: python -m pip install --upgrade pip pyyaml
+
       - name: Verify template frontmatter parses as YAML
         run: |
           set -e
