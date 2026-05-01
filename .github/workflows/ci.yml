@@ -1,0 +1,112 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Antemortem is a methodology repo (no Python package, no test suite).
+# CI verifies the discipline's contract artifacts are present and the
+# template files are well-formed YAML/Markdown — so the green check
+# means "you can adopt this methodology safely; nothing critical is
+# missing or malformed", not "the code passes tests".
+
+jobs:
+  structure:
+    name: structure check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Required top-level files exist
+        run: |
+          set -e
+          for f in README.md LICENSE NOTICE CHANGELOG.md AUTHORS.md \
+                   CONTRIBUTING.md CODE_OF_CONDUCT.md \
+                   EASY_README.md PRE_EXISTING_IP.md; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::missing required top-level file"
+              exit 1
+            fi
+          done
+          echo "All 9 required top-level files present."
+
+      - name: Required directories exist and are non-empty
+        run: |
+          set -e
+          for d in templates examples docs; do
+            if [ ! -d "$d" ]; then
+              echo "::error::missing required directory $d"
+              exit 1
+            fi
+            count=$(find "$d" -type f | wc -l)
+            if [ "$count" -eq 0 ]; then
+              echo "::error::$d/ is empty"
+              exit 1
+            fi
+            echo "$d/: $count file(s)"
+          done
+
+      - name: Set up Python (for YAML / Markdown parsing)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify template frontmatter parses as YAML
+        run: |
+          set -e
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          import yaml
+
+          failures = []
+          for md in Path("templates").rglob("*.md"):
+              text = md.read_text(encoding="utf-8")
+              if not text.startswith("---"):
+                  continue  # template without frontmatter is allowed
+              parts = text.split("---", 2)
+              if len(parts) < 3:
+                  failures.append(f"{md}: malformed frontmatter (no closing ---)")
+                  continue
+              try:
+                  yaml.safe_load(parts[1])
+              except yaml.YAMLError as exc:
+                  failures.append(f"{md}: YAML error: {exc}")
+          if failures:
+              for f in failures:
+                  print(f"::error::{f}")
+              sys.exit(1)
+          print(f"All template frontmatter parses cleanly.")
+          PY
+
+      - name: README links — at minimum no broken anchors at the top of file
+        run: |
+          set -e
+          python - <<'PY'
+          # Light check: README must not reference files that don't exist
+          # in the same repo. A full link checker is too heavy for CI;
+          # this catches the obvious "file moved, README still points at
+          # it" failure mode.
+          import re
+          import sys
+          from pathlib import Path
+
+          text = Path("README.md").read_text(encoding="utf-8")
+          # Match markdown links of the form [text](path) where path is
+          # relative (no scheme).
+          missing = []
+          for match in re.finditer(r"\[[^\]]+\]\(([^)#?]+)(?:#[^)]*)?\)", text):
+              target = match.group(1).strip()
+              if target.startswith(("http://", "https://", "mailto:", "/")):
+                  continue
+              if " " in target:
+                  continue  # skip likely false positives
+              if not Path(target).exists():
+                  missing.append(target)
+          if missing:
+              for t in missing:
+                  print(f"::error::README references missing file: {t}")
+              sys.exit(1)
+          print("All relative README links resolve to existing files.")
+          PY

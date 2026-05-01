@@ -3,6 +3,7 @@
 > **AI-assisted pre-implementation reconnaissance for software changes.**
 > A postmortem explains the wreckage. An antemortem prevents the half-day of implementation that gets burned discovering one of your "risks" was imaginary and one you never imagined was load-bearing.
 
+[![CI](https://github.com/hibou04-ops/Antemortem/actions/workflows/ci.yml/badge.svg)](https://github.com/hibou04-ops/Antemortem/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Version](https://img.shields.io/badge/version-0.1.1-blue)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen)](#status)
